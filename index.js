@@ -1,13 +1,4 @@
-const express = require('express')
+const lib = require('./calc')
 
-const app = express()
-
-const port = 3000
-
-app.get('/', (req, res) => {
-    res.send('Hello word')
-})
-
-app.listen(port, () => {
-    console.log('Express web app on http://localhost:%s', port)
-})
+console.log(lib.sub(10,5))
+console.log(lib.sum(10,5))
