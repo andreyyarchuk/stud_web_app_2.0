@@ -1,10 +1,13 @@
-const http = require('http')
-const port = 8080
+const express = require('express')
 
-const server = http.createServer((req, res) => {
-    res.end('hello word')
+const app = express()
+
+const port = 3000
+
+app.get('/', (req, res) => {
+    res.send('Hello word')
 })
 
-server.listen(port, () => {
-    console.log('server is listening on: http://localhost:%s', port)
+app.listen(port, () => {
+    console.log('Express web app on http://localhost:%s', port)
 })
