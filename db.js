@@ -15,7 +15,7 @@ class Article {
         db.all('SELECT * FROM articles', cb)
     }
     static find(id, cb) {
-        db.get('SELECTC * FROM articles id = ?', id, cb)
+        db.get('SELECT * FROM articles id = ?', id, cb)
     }
     static create(data, cb) {
         const sql = 'INSERT INTO articles(title, content) VALUES (?,?)'
