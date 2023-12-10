@@ -1,13 +1,8 @@
-const express = require('express')
+const EventEmitter = require('events').EventEmitter
+const channel = new EventEmitter()
 
-const app = express()
-
-const port = 3000
-
-app.get('/', (req, res) => {
-    res.send('Hello word')
+channel.on('join', () => {
+    console.log('Welcome')
 })
 
-app.listen(port, () => {
-    console.log('Express web app on http://localhost:%s', port)
-})
+channel.emit('join')
