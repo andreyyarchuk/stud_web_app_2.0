@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const bodyParser =require('body-parser')
+const read = require('node-readability')
 
 const app = express()
 // const articles = [{titles:'Example'}, {titles:'Example2'}, {titles:'Example3'}]
@@ -21,14 +22,22 @@ app.get('/articles', (req, res, next) => {
 })
 
 app.post('/articles', (req, res, next) => {
-    const article = {title: req.body.title}
-    articles.push(article)
-    res.send(article)
+    const url = req.body.url
+    read(url, (err, result) => {
+        if (err || !result) res.status(500).send('Error dowlondeing article')
+        Article.create(
+            {title: result.title, content: result.content},
+            (err, article) => {
+                if (err) return next(err)
+                res.send('ok')
+            }
+        )
+    })
 })
 
 app.get('/articles/:id', (req, res, next) => {
     const id = req.params.id
-    Article.find(id, () => {
+    Article.find(id, (err) => {
         if (err) return next(err)
         res.send(articles)
     })
@@ -36,7 +45,7 @@ app.get('/articles/:id', (req, res, next) => {
 
 app.delete('/articles/:id', (req, res, next) => {
     const id = req.params.id
-    Article.find(id, () => {
+    Article.delete(id, (err) => {
         if (err) return next(err)
         res.send({message: 'Deleted'})
     })
